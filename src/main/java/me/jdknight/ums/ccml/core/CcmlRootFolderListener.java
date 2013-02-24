@@ -23,7 +23,7 @@ import java.util.Set;
 
 import javax.swing.JComponent;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -573,8 +573,8 @@ public class CcmlRootFolderListener implements AdditionalFolderAtRoot
 					continue;
 				}
 
-				String categoryName = StringUtils.capitalise(propertyAndValue[0]);
-				String categoryValue = StringUtils.capitalise(propertyAndValue[1]);
+				String categoryName = WordUtils.capitalize(propertyAndValue[0]);
+				String categoryValue = WordUtils.capitalize(propertyAndValue[1]);
 				if (categoryName.isEmpty() == true || categoryValue.isEmpty() == true)
 				{
 					continue;
