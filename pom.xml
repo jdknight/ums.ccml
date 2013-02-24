@@ -53,7 +53,7 @@
 		<developerConnection>scm:git:git@github.com:jdknight/ums.ccml.git</developerConnection>
 	</scm>
 	<organization>
-		<url>http://www.jdknight.me/</url>
+		<url>http://www.jdknight.me/hosted/ccml/</url>
 		<name>jdknight</name>
 	</organization>
 	<description>This plugin aims to provide individuals with a way of categorizing their media by allowing each individual media file to have their own meta file for description.</description>
