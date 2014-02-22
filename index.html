@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Ums.ccml by jdknight</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Ums.ccml</h1>
+        <p>Custom Category Media Library for Universal Media Server and PS3 Media Server</p>
+
+        <p class="view"><a href="https://github.com/jdknight/ums.ccml">View the Project on GitHub <small>jdknight/ums.ccml</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/jdknight/ums.ccml/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/jdknight/ums.ccml/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/jdknight/ums.ccml">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>This plugin aims to provide individuals with a way of categorizing their media by allowing each individual media file to have their own meta file for description.</p>
+
+<h2>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<p>This release has been tested with Universal Media Server version 2.50.0. It may or may not 
+work in previous and future versions of Universal Media Server or PS3 Media Server. Builds 
+for specific versions are available.</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Place the JAR file into the 'plugins' directory where you have installed your media server.</p>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a name="categorizing-media" class="anchor" href="#categorizing-media"><span class="octicon octicon-link"></span></a>Categorizing Media</h3>
+
+<p>The plugin will scan your specified shared folders of your media server for video, audio and image media types. For a supported media type, it will check if a meta file (.meta) exists for that file.</p>
+
+<p>For example, the media file:</p>
+
+<pre><code>    \Videos\Gaming\Diablo3-CinematicTrailer_US.avi
+</code></pre>
+
+<p>will search for:</p>
+
+<pre><code>    \Videos\Gaming\Diablo3-CinematicTrailer_US.avi.meta
+</code></pre>
+
+<p>The meta file is parses simple keys and values (like an ini file) where the key is the category type and the value is the category.</p>
+
+<p>To continue the above example, we want to classify this media file of having a genre 'Trailers' and released in the year 2008. We would have the following in our meta file:</p>
+
+<pre><code>    Genre=Trailers
+    Year=2008
+</code></pre>
+
+<p>Now when I browse my media server under CCML I can now venture to this media file by navigating through either one of the following menus:</p>
+
+<pre><code>    [1] Original File Browsing Method
+    [2] #- CCML -#
+            Video
+                Genre
+                    Trailers
+                        Diablo3-CinematicTrailer_US.avi
+    [3] #- CCML -#
+            Video
+                Year
+                    2008
+                        Diablo3-CinematicTrailer_US.avi
+</code></pre>
+
+<p>There is no defined limitation on how many categories you have, however, this has only been tested with a small batch of media files.</p>
+
+<h3>
+<a name="master-categories" class="anchor" href="#master-categories"><span class="octicon octicon-link"></span></a>Master Categories</h3>
+
+<p>Master categories are supported by specifying a reserved keyword "Master" as a category. If any meta file defines a master category for a specific media type, this should add another level between a media type and category types. For example, the following meta file exists:</p>
+
+<pre><code>    MyActionMovie.avi.meta]
+    Master=Movie
+    Genre=Action
+
+    MyActionTvShow.avi.meta]
+    Master=TV
+    Genre=Action
+
+    MyActionUnknown.avi.meta]
+    Genre=Action
+</code></pre>
+
+<p>If no master keyword was provided, the following would be the result of the categorization:</p>
+
+<pre><code>    CCML
+     Video
+       Genre
+        Action
+          MyActionMovie.avi
+          MyActionTvShow.avi
+          MyActionUnknown.avi
+</code></pre>
+
+<p>If master keywords are provided in the meta files, the following would be generated:</p>
+
+<pre><code>    CCML
+      Video
+       Movie
+         Genre
+            Action
+             MyActionMovie.avi
+     TV
+       Genre
+          Action
+           MyActionTvShow.avi
+      Uncategorized
+        Genre
+         Action
+           MyActionUnknown.avi
+</code></pre>
+
+<h2>
+<a name="ccml-cache" class="anchor" href="#ccml-cache"><span class="octicon octicon-link"></span></a>CCML Cache</h2>
+
+<p>Once the plugin is loaded, your shared folders will be parsed for meta information. Once parsed, the information will be cached. If you make modifications to your meta information such as adding new content or altering a meta file, you will have to wait until you restart your media server.</p>
+
+<h2>
+<a name="alternative-meta-folder" class="anchor" href="#alternative-meta-folder"><span class="octicon octicon-link"></span></a>Alternative Meta Folder</h2>
+
+<p>Meta files can also be placed into an alternative folder. Configurable from the interface, a user can provide a folder which meta files can be mapped to a media file.</p>
+
+<p>For example, if the following media file exists:</p>
+
+<pre><code>        \Videos\Gaming\Diablo3-CinematicTrailer_US.avi
+</code></pre>
+
+<p>and the following alternative meta folder is set:</p>
+
+<pre><code>        \MetaFolder\
+</code></pre>
+
+<p>the following file in the alternative meta folder will map meta information for the media:</p>
+
+<pre><code>        \MetaFolder\Diablo3-CinematicTrailer_US.avi.meta
+</code></pre>
+
+<h3>
+<a name="links" class="anchor" href="#links"><span class="octicon octicon-link"></span></a>Links</h3>
+
+<ul>
+<li><a href="http://www.jdknight.me/hosted/ccml/">http://www.jdknight.me/hosted/ccml/</a></li>
+<li><a href="https://github.com/jdknight/ums.ccml/">https://github.com/jdknight/ums.ccml/</a></li>
+<li><a href="http://www.universalmediaserver.com/">http://www.universalmediaserver.com/</a></li>
+</ul>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/jdknight">jdknight</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
